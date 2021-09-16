@@ -1,0 +1,178 @@
+<mat-card class="dropdown">
+  <mat-card-content class="content">
+    <mat-select [(ngModel)]="product">
+      <mat-option *ngFor="let product of dataSource.data" [value]="product.id">
+        {{ product.name }}
+      </mat-option>
+    </mat-select>
+  </mat-card-content>
+</mat-card>
+
+<p>
+  <a routerLink="/cart" routerLinkActive="active">
+    <button
+      class="Cart"
+      mat-raised-button
+      color="primary"
+      matBadge="8"
+      matBadgePosition="before"
+      matBadgeColor="accent"
+    >
+      Action
+    </button></a
+  >
+</p>
+
+<div *ngFor="let product of product">
+  <h3>
+    <a
+      [title]="product.name + ' details'"
+      [routerLink]="['/products', product.id]"
+    >
+      {{ product.name }}
+    </a>
+  </h3>
+
+  <!-- . . . -->
+</div>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Products</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <table
+      mat-table
+      [dataSource]="dataSource.data"
+      class="mat-elevation-z8"
+      style="width: 100%"
+    >
+      <ng-container matColumnDef="id">
+        <th mat-header-cell *matHeaderCellDef>ID</th>
+        <td mat-cell *matCellDef="let element">{{ element.id }}</td>
+      </ng-container>
+      <ng-container matColumnDef="name">
+        <th mat-header-cell *matHeaderCellDef>Name</th>
+        <td mat-cell *matCellDef="let element">{{ element.name }}</td>
+      </ng-container>
+      <ng-container matColumnDef="description">
+        <th mat-header-cell *matHeaderCellDef>Description</th>
+        <td mat-cell *matCellDef="let element">{{ element.description }}</td>
+      </ng-container>
+      <ng-container matColumnDef="price">
+        <th mat-header-cell *matHeaderCellDef>Price</th>
+        <td mat-cell *matCellDef="let element">{{ element.price }}</td>
+      </ng-container>
+
+      <ng-container matColumnDef="actions">
+        <th mat-header-cell *matHeaderCellDef>Actions</th>
+        <td mat-cell *matCellDef="let element">
+          <button
+            mat-raised-button
+            (click)="deleteProduct(element.id)"
+            color="secondary"
+          >
+            Delete Product
+          </button>
+          <button
+            mat-raised-button
+            (click)="selectProduct(element)"
+            color="secondary"
+          >
+            Select Product
+          </button>
+        </td>
+      </ng-container>
+
+      <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+      <tr mat-row *matRowDef="let row; columns: displayedColumns"></tr>
+    </table>
+  </mat-card-content>
+</mat-card>
+
+<mat-card>
+  <mat-card-header>
+    <mat-card-title>Create a Product</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+    <form
+      #f="ngForm"
+      class="mat-elevation-z8"
+      style="width: 100%; padding: 5px"
+    >
+      <mat-form-field>
+        <input
+          type="text"
+          matInput
+          placeholder="Name"
+          name="name"
+          [(ngModel)]="product.name"
+          required
+        />
+        <mat-error>The name field is required</mat-error>
+      </mat-form-field>
+      <mat-form-field>
+        <input
+          type="text"
+          matInput
+          placeholder="Description"
+          name="description"
+          [(ngModel)]="product.description"
+          required
+        />
+        <mat-error>The description field is required</mat-error>
+      </mat-form-field>
+
+      <mat-form-field>
+        <input
+          type="text"
+          matInput
+          placeholder="Price"
+          name="price"
+          [(ngModel)]="product.price"
+          required
+        />
+        <mat-error>The price field is required</mat-error>
+      </mat-form-field>
+
+      <!-- <mat-form-field>
+        <input
+          ngModel
+          #username="ngModel"
+          type="text"
+          matInput
+          placeholder="Email test"
+          name="email"
+          required
+        />
+        <mat-hint>Add an email address</mat-hint>
+        <span matSuffix>@gmail.com</span>
+        <span matPrefix>admin.</span>
+        <mat-error *ngIf="username.invalid">
+          The email field is required</mat-error
+        >
+      </mat-form-field> -->
+    </form>
+  </mat-card-content>
+  <mat-card-actions>
+    <button
+      mat-raised-button
+      *ngIf="!product.id"
+      (click)="createProduct(f)"
+      color="primary"
+    >
+      Save Product
+    </button>
+    <button
+      mat-raised-button
+      *ngIf="product.id"
+      (click)="updateProduct(f)"
+      color="primary"
+    >
+      Update Product
+    </button>
+    <button mat-raised-button (click)="newProduct()" color="primary">
+      New..
+    </button>
+  </mat-card-actions>
+</mat-card>

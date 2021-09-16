@@ -1,0 +1,17 @@
+* {
+  margin: 20px;
+}
+.button Action {
+  margin: center;
+  background-color: rebeccapurple;
+  color: black;
+}
+
+.dropdown {
+  margin: 10px;
+  margin-left: 10%;
+  margin-right: 60%;
+  margin-top: 20px;
+  margin-bottom: 30px;
+  border: 20%;
+}
