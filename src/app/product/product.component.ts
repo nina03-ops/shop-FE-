@@ -1,5 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { AuthService } from '../auth/auth.service';
 import { ProductService } from './product.service';
+import { CartService } from '../cart/cart.service';
+import { Cart } from '../cart/cart';
 
 @Component({
   selector: 'app-product',
@@ -7,21 +10,20 @@ import { ProductService } from './product.service';
   styleUrls: ['./product.component.css']
 })
 export class ProductComponent implements OnInit {
-  displayedColumns  : string[] = ['id', 'name', 'description', 'price'];
+  displayedColumns  : string[] = ['id', 'name', 'description', 'price','buy'];
   dataSource:any  = [];
   product:any = {};
-  constructor(private productService: ProductService) { }
+  constructor(private auth: AuthService,private productService: ProductService, private cartService:CartService) { }
 
   ngOnInit() {
-    this.productService.readProducts().subscribe((result)=>{   
+    this.productService.readProducts().subscribe((result)=>{
      this.dataSource  =  result;
     })
-    
   }
   selectProduct(product:any){
     this.product = product;
   }
-  
+
   newProduct(){
     this.product = {};
   }
@@ -30,7 +32,6 @@ export class ProductComponent implements OnInit {
     this.productService.createProduct(f.value).subscribe((result)=>{
       console.log(result);
     });
-    
   }
 
   deleteProduct(id:any){
@@ -45,4 +46,22 @@ export class ProductComponent implements OnInit {
       console.log(result);
     });
   }
+
+  // addToCart() {
+  //   window.alert('Added');
+  // }
+
+  addToCart(f:any) {
+    this.cartService.createCart(f.value).subscribe((result)=>{
+    }, error => {
+        window.alert(error.error.message || error.error.text);
+        console.log(error);
+    });
+  }
+
+  isAuthenticated() {
+    return this.auth.isAuthenticated();
+  }
+
+
 }

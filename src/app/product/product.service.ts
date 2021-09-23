@@ -1,5 +1,6 @@
-import { HttpClient } from "@angular/common/http";
+import { HttpClient, HttpHeaders } from "@angular/common/http";
 import { Injectable } from "@angular/core";
+import { AuthService } from "../auth/auth.service";
 import { Product } from "./product";
 
 @Injectable({
@@ -7,20 +8,29 @@ import { Product } from "./product";
   })
   export class ProductService {
     API_SERVER = "http://localhost:3000";
-    constructor(public httpClient: HttpClient) { }
+    constructor(private http: HttpClient, private auth: AuthService) { }
+
+  // creates header
+  private _authHeader(): Object {
+    return {
+      headers: new HttpHeaders({ 'authorization': `Bearer ${this.auth.getAccessToken()}`})
+    };
+  }
+
   public readProducts(){
-    return this.httpClient.get<Product[]>(`${this.API_SERVER}/product/all`);
+    return this.http.get<Product[]>(`${this.API_SERVER}/product/all`);
   }
-  
+
   public createProduct(product: Product){
-    return this.httpClient.post<Product>(`${this.API_SERVER}/product/create`, product);
+    return this.http.post<Product>(`${this.API_SERVER}/product/create`, product,this._authHeader());
   }
-  
+
   public updateProduct(product: Product){
-    return this.httpClient.put<Product>(`${this.API_SERVER}/product/${product.id}/update`, product);
+    return this.http.put<Product>(`${this.API_SERVER}/product/${product.id}/update`, product);
   }
-  
+
   public deleteProduct(id: number){
-    return this.httpClient.delete(`${this.API_SERVER}/product/${id}/delete`);
+    return this.http.delete(`${this.API_SERVER}/product/${id}/delete`);
   }
+
 }

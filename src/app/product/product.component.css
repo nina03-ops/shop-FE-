@@ -15,3 +15,16 @@
   margin-bottom: 30px;
   border: 20%;
 }
+#mat-elevation-z8 {
+  width: 90%;
+  text-align: center;
+}
+.btn-secondary {
+  margin: center;
+  background-color: rebeccapurple;
+  color: white;
+}
+.cart {
+  padding-left: 800px;
+  padding-top: 10px;
+}
