@@ -11,17 +11,19 @@ import { MatFormFieldModule} from  '@angular/material/form-field';
 import { MatTableModule} from  '@angular/material/table';
 import {MatListModule} from '@angular/material/list';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { ProductComponent } from './product/product.component';
 import { MatSelectModule } from '@angular/material/select';
 import { CartComponent } from './cart/cart.component';
 import { RouterModule } from '@angular/router';
+import { HeaderComponent } from './header/header.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     ProductComponent,
-    CartComponent
+    CartComponent,
+    HeaderComponent
   ],
   imports: [
     BrowserModule,
@@ -31,12 +33,13 @@ import { RouterModule } from '@angular/router';
     HttpClientModule,
     FormsModule,
     MatSelectModule,
-    MatInputModule, 
-    MatButtonModule, 
-    MatCardModule, 
+    MatInputModule,
+    MatButtonModule,
+    MatCardModule,
     MatFormFieldModule,
     MatTableModule,
-    MatListModule
+    MatListModule,
+    ReactiveFormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
